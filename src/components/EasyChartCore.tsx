@@ -1,21 +1,30 @@
-import React, { FunctionComponent, useRef } from 'react'
+import React, { PureComponent } from 'react';
+import echarts, { ECharts } from 'echarts';
 
-interface OwnProps {
-    chart: object;
+interface CoreChart {
+    chart: ECharts
     option: object;
     className: string;
 }
 
-type Props = OwnProps
+type PropsCoreChart = CoreChart;
 
-const EasyChartCore: FunctionComponent<Props> = (props) => {
-    const echartsElement = useRef(null)
-    return (
-        <div
-            ref={echartsElement}
-            className={`echarts-for-react ${props.className}`}
-        />
-    )
+class EasyChartCore extends PureComponent<PropsCoreChart> {
+    private readonly coreChart: React.RefObject<HTMLInputElement>;
+    echartsLib: object;
+
+    constructor(props: PropsCoreChart) {
+        super(props);
+        this.echartsLib = echarts;
+    }
+
+    render() {
+        return (
+            <div className={'easy-chart-core'}>
+                <div ref={this.coreChart} />
+            </div>
+        );
+    }
 }
 
-export default EasyChartCore
+export default EasyChartCore;
